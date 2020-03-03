@@ -1,18 +1,22 @@
 package com.samir.warcard
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import kotlin.properties.Delegates
+import kotlin.system.exitProcess
 
-class MainActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_game)
     }
+
+
 
     lateinit var leftCard: ImageView
     lateinit var rightCard: ImageView
@@ -21,10 +25,13 @@ class MainActivity : AppCompatActivity() {
     lateinit var dealbtn: ImageView
     lateinit var winnerText: TextView
     lateinit var restart: Button
+    lateinit var closebtn: Button
     var player = 0
     var cpu = 0
     var score = 0
-    val maxScore = 10
+    var maxScore = 10
+
+
 
     fun deal(view: View){
         leftCard = findViewById(R.id.leftCard)
@@ -34,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         winnerText = findViewById(R.id.winnerText)
         dealbtn = findViewById(R.id.dealButton)
         restart = findViewById(R.id.restart)
+        closebtn = findViewById(R.id.Close)
 
         val numberLeft = (2..14).random()
         val numberRight = (2..14).random()
@@ -63,10 +71,12 @@ class MainActivity : AppCompatActivity() {
             if(player > cpu){
                 dealbtn.visibility = View.INVISIBLE
                 restart.visibility = View.VISIBLE
+                closebtn.visibility = View.VISIBLE
                 winnerText.text = "Player won!"
             }else if (cpu > player){
                 dealbtn.visibility = View.INVISIBLE
                 restart.visibility = View.VISIBLE
+                closebtn.visibility = View.VISIBLE
                 winnerText.text = "CPU won!"
             }
         }
@@ -83,6 +93,12 @@ class MainActivity : AppCompatActivity() {
         cpuScore.text = "0"
         dealbtn.visibility = View.VISIBLE
         restart.visibility = View.INVISIBLE
+        closebtn.visibility = View.INVISIBLE
+    }
+
+    fun Close(View: View){
+        moveTaskToBack(true)
+        exitProcess(-1)
     }
 
 }
